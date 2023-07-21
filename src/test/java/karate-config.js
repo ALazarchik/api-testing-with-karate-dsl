@@ -5,8 +5,7 @@ function fn() {
     env = 'dev';
   }
   var config = {
-    env: env,
-    myVarName: 'someValue'
+    apiUrl: 'https://api.realworld.io/api'
   }
   if (env == 'dev') {
     // customize
@@ -14,5 +13,9 @@ function fn() {
   } else if (env == 'e2e') {
     // customize
   }
+
+  var accessToken = karate.callSingle('classpath:helpers/GetToken.feature', config).authToken
+  karate.configure('headers', { Authorization: `Token ${accessToken}` })
+
   return config;
 }
